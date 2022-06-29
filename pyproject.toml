@@ -1,0 +1,50 @@
+[project]
+name = "Livenodes-Matplotlib"
+dynamic = ['version']
+description = "LiveNodes: node based live streaming sensor/data and visualization suite."
+authors = [
+    { name = "Yale Hartmann", email = "yale.hartmann@uni-bremen.de" }
+]
+# TODO: figure out how/if to add livenodes here... for now install manually in venv via:
+# pip install . --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple
+# pip install -e . --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple
+dependencies = [
+    "livenodes>=0.7.1",
+    "numpy>=1.22.1",
+    "seaborn>=0.11.2",
+    "matplotlib>=3.5.1",
+]
+
+[project.entry-points."livenodes.nodes"]
+annotate_gui = "livenodes_matplotlib.annotate_gui:Annotate_gui"
+draw_gmm = "livenodes_matplotlib.draw_gmm:Draw_gmm"
+draw_hbars = "livenodes_matplotlib.draw_hbars:Draw_hbars"
+draw_lines = "livenodes_matplotlib.draw_lines:Draw_lines"
+draw_recognition = "livenodes_matplotlib.draw_recognition:Draw_recognition"
+draw_scatter = "livenodes_matplotlib.draw_scatter:Draw_scatter"
+draw_search_graph = "livenodes_matplotlib.draw_search_graph:Draw_search_graph"
+draw_text_display = "livenodes_matplotlib.draw_text_display:Draw_text_display"
+
+
+[project.optional-dependencies]
+dev = [
+    "tox",
+    "pytest>=7.0.1"
+]
+
+[build-system]
+requires = [
+    "setuptools>=48",
+    "wheel",
+    "setuptools_scm >= 2.0.0, <3",
+    "setuptools-git-versioning"
+]
+build-backend = 'setuptools.build_meta'
+
+[tool.setuptools-git-versioning]
+enabled = true
+
+[tool.black]
+line-length = 140
+target-version = ['py36']
+skip-string-normalization = true
