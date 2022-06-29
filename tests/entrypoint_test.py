@@ -1,6 +1,7 @@
 import glob
 from os.path import dirname, basename, isfile, join
 from importlib.metadata import entry_points
+import traceback
 
 import pytest
 
@@ -8,7 +9,7 @@ import pytest
 @pytest.fixture
 def discovered_modules():
     exclude = ['__init__', 'utils']
-    modules = glob.glob(join(dirname(__file__), '../src/livenodes_basic_nodes/', "*.py"))
+    modules = glob.glob(join(dirname(__file__), '../src/livenodes_matplotlib/', "*.py"))
     names = [basename(f)[:-3] for f in modules if isfile(f)]
     return [f for f in names if not f in exclude]
 
@@ -28,4 +29,8 @@ class TestProcessing():
 
     def test_all_loadable(self):
         for x in entry_points()['livenodes.nodes']:
-            x.load()
+            try:
+                x.load()
+            except Exception as err:
+                print('Could not load:', x.name)
+                raise err

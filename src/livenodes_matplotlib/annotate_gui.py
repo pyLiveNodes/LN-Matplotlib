@@ -5,7 +5,7 @@ from livenodes.viewer import View_MPL
 
 
 # TODO: figure out how to resolve these name clashes
-class Annotate_ui_button_mpl(View_MPL):
+class Annotate_gui(View_MPL):
     channels_in = ['Data']
     channels_out = ['Data', 'Annotation']
 
