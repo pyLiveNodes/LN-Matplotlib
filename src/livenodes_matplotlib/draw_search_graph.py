@@ -2,6 +2,13 @@ import numpy as np
 import seaborn as sns
 
 from livenodes.viewer import View_MPL
+from typing import NamedTuple
+from .ports import Ports_empty, Port_Data, Port_Dict, Port_Vector_of_Strings
+
+class Ports_in(NamedTuple):
+    annot: Port_Vector_of_Strings = Port_Vector_of_Strings("Hypothesis")
+    meta: Port_Dict = Port_Dict("HMM Meta")
+
 
 
 class Draw_search_graph(View_MPL):
@@ -14,8 +21,8 @@ class Draw_search_graph(View_MPL):
     Draws on a matplotlib canvas.
     """
 
-    channels_in = ['HMM Meta', 'Hypothesis']
-    channels_out = []
+    ports_in = Ports_in()
+    ports_out = Ports_empty()
 
     category = "Draw"
     description = ""

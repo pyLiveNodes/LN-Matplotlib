@@ -12,6 +12,7 @@ from livenodes.viewer import View_MPL
 #
 # The main advantage of this is, that the pipeline and render loops are separated and one doesn't slow down the other
 #
+from .ports import Ports_data_channels, Ports_empty
 
 
 # class Draw_lines_mpl(View_MPL):
@@ -24,8 +25,8 @@ class Draw_lines(View_MPL):
     Draws on a matplotlib canvas.
     """
 
-    channels_in = ['Data', 'Channel Names']
-    channels_out = []
+    ports_in = Ports_data_channels()
+    ports_out = Ports_empty()
 
     category = "Draw"
     description = ""
