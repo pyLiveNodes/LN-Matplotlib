@@ -3,11 +3,18 @@ from matplotlib.widgets import TextBox, Button
 
 from livenodes.viewer import View_MPL
 
+from typing import NamedTuple
+from .ports import Ports_data, Port_Data, Port_Vector_of_Strings
+
+class Ports_out(NamedTuple):
+    data: Port_Data = Port_Data("Data")
+    annotation: Port_Vector_of_Strings = Port_Vector_of_Strings("Annotation")
+
 
 # TODO: figure out how to resolve these name clashes
 class Annotate_gui(View_MPL):
-    channels_in = ['Data']
-    channels_out = ['Data', 'Annotation']
+    ports_in = Ports_data()
+    ports_out = Ports_out()
 
     category = "Annotation"
     description = ""

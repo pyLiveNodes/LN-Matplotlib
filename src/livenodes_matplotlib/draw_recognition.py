@@ -3,6 +3,13 @@ from itertools import groupby
 import seaborn as sns
 
 from livenodes.viewer import View_MPL
+from typing import NamedTuple
+from .ports import Ports_empty, Port_Data, Port_Dict, Port_Vector_of_Strings
+
+class Ports_in(NamedTuple):
+    data: Port_Data = Port_Data("Recognition") # TODO: this is not correct!
+    annot: Port_Vector_of_Strings = Port_Vector_of_Strings("Annotation")
+    meta: Port_Dict = Port_Dict("HMM Meta")
 
 
 def convert_pos(pos, yrange):
@@ -43,8 +50,8 @@ class Draw_recognition(View_MPL):
     Draws on a matplotlib canvas.
     """
 
-    channels_in = ['Recognition', 'Annotation', 'HMM Meta']
-    channels_out = []
+    ports_in = Ports_in() #"GMM Models", "GMM Means", "GMM Covariances", "GMM Weights"]
+    ports_out = Ports_empty()
 
     category = "Draw"
     description = ""
