@@ -1,4 +1,9 @@
 from livenodes.viewer import View_MPL
+from typing import NamedTuple
+from .ports import Ports_empty, Port_Data, Port_Dict, Port_Vector_of_Strings
+
+class Ports_in(NamedTuple):
+    text: Port_Vector_of_Strings = Port_Vector_of_Strings("Text")
 
 
 class Draw_text_display(View_MPL):
@@ -8,8 +13,8 @@ class Draw_text_display(View_MPL):
     Draws on a matplotlib canvas.
     """
 
-    channels_in = ['Text']
-    channels_out = []
+    ports_in = Ports_in()
+    ports_out = Ports_empty()
 
     category = "Draw"
     description = ""
