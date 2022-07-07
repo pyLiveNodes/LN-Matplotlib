@@ -68,6 +68,14 @@ livenodes\_matplotlib.draw\_text\_display module
    :undoc-members:
    :show-inheritance:
 
+livenodes\_matplotlib.ports module
+----------------------------------
+
+.. automodule:: livenodes_matplotlib.ports
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
