@@ -20,7 +20,7 @@ class TestProcessing():
     def test_all_declared(self, discovered_modules):
         livnodes_entrypoints = [x.name for x in entry_points()['livenodes.nodes']]
 
-        assert set(livnodes_entrypoints) == set(discovered_modules)
+        assert set(discovered_modules) <= set(livnodes_entrypoints)
 
     def test_loads_class(self):
         draw_lines = [x.load() for x in entry_points()['livenodes.nodes'] if x.name == 'draw_lines'][0]
