@@ -1,5 +1,5 @@
 import numbers
-from livenodes.port import Port
+from livenodes.components.port import Port
 from typing import NamedTuple
 import numpy as np
 
