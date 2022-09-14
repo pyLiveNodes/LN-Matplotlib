@@ -56,7 +56,7 @@ class Annotate_gui(View_MPL):
             self.fall_back_target, self.current_target = self.target_q.get()
 
         self._emit_data([self.current_target] * len(data),
-                        channel="Annotation")
+                        channel=self.ports_out.annotation)
 
     def __activity_toggle_rec(self, event):
         if self.recording:
