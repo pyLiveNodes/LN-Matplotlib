@@ -17,7 +17,9 @@ dependencies = [
 
 [project.entry-points."livenodes.nodes"]
 annotate_gui = "livenodes_matplotlib.annotate_gui:Annotate_gui"
+draw_broken_bars = "livenodes_matplotlib.draw_broken_bars:Draw_broken_bars"
 draw_gmm = "livenodes_matplotlib.draw_gmm:Draw_gmm"
+draw_heatmap = "livenodes_matplotlib.draw_heatmap:Draw_heatmap"
 draw_hbars = "livenodes_matplotlib.draw_hbars:Draw_hbars"
 draw_lines = "livenodes_matplotlib.draw_lines:Draw_lines"
 draw_scatter = "livenodes_matplotlib.draw_scatter:Draw_scatter"
