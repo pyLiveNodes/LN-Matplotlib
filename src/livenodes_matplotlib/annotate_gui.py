@@ -50,13 +50,10 @@ class Annotate_gui(View_MPL):
 
     def process(self, data, **kwargs):
         # IMPORTANT: we assume that the length of data is always short enough that we do not care about timing issues with the label
-        self._emit_data(data)
-
         while not self.target_q.empty():
             self.fall_back_target, self.current_target = self.target_q.get()
 
-        self._emit_data([self.current_target] * len(data),
-                        channel=self.ports_out.annotation)
+        return self.ret(data=data, annot=[self.current_target] * len(data))
 
     def __activity_toggle_rec(self, event):
         if self.recording:
