@@ -56,6 +56,7 @@ class Draw_heatmap(View_MPL):
             # -> could make stuff more efficient, but well...
             # changes = []
 
+            # TODO: figure out how to use propper blitting here!
             # x1 = np.linspace(0, len(sig) / 1000, len(data))
             mesh = self.ax.pcolormesh(data, cmap="YlGnBu")
 
