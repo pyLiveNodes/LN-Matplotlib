@@ -56,6 +56,21 @@ class Port_Single_Channel_Number(Port):
             return False, "Should be number;"
         return True, None
 
+class Port_two_dim_any(Port):
+
+    example_values = [
+        [["EMG1", "EMG2"]],
+        [[0, 1], [-1, 10]]
+    ]
+
+    def __init__(self, name='Channel Names', optional=False):
+        super().__init__(name, optional)
+
+    @staticmethod
+    def check_value(value):
+        if not (type(value) == list and type(value[0]) == list):
+            return False, "Should be list of lists;"
+        return True, None
 
 class Port_Vector_of_Strings(Port):
 

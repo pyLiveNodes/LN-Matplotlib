@@ -1,74 +1,211 @@
 import numpy as np
+from itertools import groupby
+import seaborn as sns
 
 from livenodes.viewer import View_MPL
-from .ports import Ports_data, Ports_empty
+from typing import NamedTuple
+from .ports import Port_two_dim_any
+from livenodes_core_nodes.ports import Ports_empty, Port_Vector, Port_Dict, Port_Vector_of_Strings
+
+class Ports_in(NamedTuple):
+    classes: Port_two_dim_any = Port_two_dim_any("classes")
+    channels: Port_Vector_of_Strings = Port_Vector_of_Strings("Channel Names")
+
+
+def convert_pos(pos, yrange):
+    ymin, ywidth = yrange
+    ymax = ymin + ywidth
+    verts = [[(xmin, ymin), (xmin, ymax), (xmin + xwidth, ymax),
+              (xmin + xwidth, ymin), (xmin, ymin)] for xmin, xwidth in pos]
+    return verts
+
+
+# there is likeley a more efficient and elegant way with reduce here.
+def convert_list_pos(itms, x_max, yrange):
+    start = max(0, x_max - len(itms))
+    pos = []
+    names = []
+    for act, group in groupby(itms):
+        n_itms = len(list(group))
+        next_start = start + n_itms
+        pos.append((start, next_start))
+        names.append(act)
+        start = next_start
+    # print(names[0], start, sum([y - x for x, y in pos]), len(itms), multiplier)
+    return names, convert_pos(pos, yrange)
 
 
 class Draw_broken_bars(View_MPL):
     """
+
     """
 
-    ports_in = Ports_data()
+    ports_in = Ports_in()
     ports_out = Ports_empty()
 
     category = "Draw"
     description = ""
 
-    example_init = {
-        "name": "Draw broken lines",
-        "xlim": 100
-    }
+    example_init = {"name": "Classes", "xAxisLength": 50, "n_plots": 1}
 
     def __init__(self,
-                 xlim=100,
-                 name="Draw broken lines",
+                 xAxisLength=50,
+                 name="Classes",
+                 n_plots=1,
                  **kwargs):
         super().__init__(name=name, **kwargs)
 
-        self.xlim = xlim
+        # process side
+        self.colors = None
+        self.buffer = [[]] * n_plots 
+
+        # render side
+        self._bar_colors = []
+
+        self.xAxisLength = xAxisLength
+        self.n_plots = n_plots
+
+        self.verts = [[]] * n_plots 
+        self.names = [['']] * n_plots 
+        self.channel_names = None
 
     def _settings(self):
         return {\
             "name": self.name,
-            "xlim": self.xlim
+            "xAxisLength": self.xAxisLength,
+            "n_plots": self.n_plots
            }
 
+    def _should_draw(self, **cur_state):
+        # if not bool(cur_state):
+        #     print('Draw infos', "recognition" in cur_state, "annotation" in cur_state, "colors" in cur_state, bool(cur_state))
+        return bool(cur_state)
+
     def _init_draw(self, subfig):
+        yrange = (0, 0.7)
+
+        axes = subfig.subplots(self.n_plots, 1)
+        if self.n_plots == 1:
+            axes = [axes]
         subfig.suptitle(self.name, fontsize=14)
 
-        self.ax = subfig.subplots(1, 1)
-        self.ax.set_ylim((.5, 1.5))
-        self.ax.set_yticks([])
-        self.ax.set_xlim(self.xlim)
-        self.ax.invert_xaxis()
+        bar_objs = []
+        txt_fout_objs = []
+        txt_fin_objs = []
 
-        # self.broken_bar = self.ax.barh(y=1, width=[self.xlim])
+        for ax, name in zip(axes, self.names):
+            ax.set_ylim(0, 1)
+            ax.set_xlim(0, self.xAxisLength)
+            ax.set_xticks([])
+            ax.set_yticks([])
+            # ax.set_ylabel(name)
 
-        # def calc_vert(xmin, xmax, ymax=1.5, ymin=0.5):
-        #     xwidth = xmax-xmin
-        #     return [(xmin, ymin), (xmin, ymax), (xmin + xwidth, ymax),
-        #       (xmin + xwidth, ymin), (xmin, ymin)]
+            # many thanks to: https://stackoverflow.com/questions/59587466/how-can-i-annotate-a-grouped-broken-barh-chart-python-matplotlib
+            bar_objs.append(
+                ax.broken_barh([(0, 0)], yrange=yrange, edgecolor='white'))
+            # bar_objs.append(ax.broken_barh([(0, 0)], yrange=yrange))
+            txt_fout_objs.append(
+                ax.text(x=0,
+                        y=0.9,
+                        s="",
+                        ha='left',
+                        va='top',
+                        color='black',
+                        fontsize=12))  #backgroundcolor='grey',
+            txt_fin_objs.append(
+                ax.text(x=self.xAxisLength,
+                        y=0.9,
+                        s="",
+                        ha='right',
+                        va='top',
+                        color='black',
+                        fontsize=12))  #backgroundcolor='grey',
 
-        def update(data):
-            nonlocal self
-            bar_widths = []
-            # Determine length of each segment
-            for index_list in data:
-                prev = 0
-                for index in index_list[1]:
-                    bar_widths.append(index-prev)
-                    prev = index
-                # Last border until end
-                bar_widths.append(index_list[0]-prev)
-            print(bar_widths)
+        # Add legend
+        # handles = [ mpatches.Patch(color=val, label=key) for key, val in self.token_cols.items()]
+        # legend = subfig.legend(handles=handles, loc='upper right')
+        # legend.set_alpha(0) # TODO: for some reason the legend is transparent, no matter what i set here...
+        # legend.set_zorder(100)
 
-            self.ax.clear()
-            self.ax.barh(y=1, width=bar_widths)
+        def update(classes):
+            nonlocal self, bar_objs, txt_fout_objs, txt_fin_objs
 
-            return []
+            # if colors is not None:
+            #     self._bar_colors = colors
+
+            for i, sequence in enumerate(classes):
+                self.names[i], self.verts[i] = convert_list_pos(
+                    sequence[-self.xAxisLength:], self.xAxisLength, (0, 0.7))
+            
+            #TODO: rework this to work properly with missing streams...
+            # if len(self.verts) > 0 and len(self._bar_colors) > 0:
+            # for bar_obj, tx_out, tx_in, verts, names, colors in zip(
+            for bar_obj, tx_out, tx_in, verts, names in zip(
+                    bar_objs, txt_fout_objs, txt_fin_objs, self.verts,
+                    self.names): #, self._bar_colors):
+                bar_obj.set_verts(verts)
+                # bar_obj.set_facecolor([colors[name] for name in names])
+                tx_out.set_text(names[0])
+                tx_in.set_text(names[-1])
+            return bar_objs + txt_fout_objs + txt_fin_objs
 
         return update
 
-    # data should follow the (batch/file, time, channel) format
-    def process(self, data,  **kwargs):       
-        self._emit_draw(data=data)
+    def _should_process(self,
+                        classes=None,
+                        channel_names=None):
+
+        return (classes is not None) \
+            and (not self._is_input_connected(self.ports_in.channels) or (self.channel_names is not None) or (channel_names is not None))
+
+    def process(self,
+                classes=None,
+                channel_names=None,
+                **kwargs):
+        # if hmm_meta is not None:
+        #     token_colors, atom_colors, state_colors = self._init_colors(
+        #         hmm_meta.get('topology'))
+        #     self.colors = [
+        #         state_colors, atom_colors, token_colors, token_colors
+        #     ]
+
+        # if len(recognition) > 0:
+        #     # for the annotaiton, we'll assume it is in the normal (batch/file, time, channel) format and that batch is not relevant here
+        #     # similarly we expect recognition not to have taken batch into account (ah fu... there is still some trouble there, that is not a true assumption)
+        #     # print(np.array(annotation).shape, len(recognition))
+        #     if annotation is not None:
+        #         annotation = np.array(annotation)[0, :, 0]
+        #     self._emit_draw(recognition=recognition,
+        #                     colors=self.colors,
+        #                     annotation=annotation)
+            # self._emit_draw(recognition=recognition, colors=self.colors, annotation=None)
+        
+        for i, sequence in enumerate(classes):
+            self.buffer[i] += list(sequence)
+
+        self._emit_draw(classes=self.buffer) # TODO: add mem or batch before or inside this...
+
+    # TODO: move this to utils or something...
+    def _init_colors(self, topology):
+        c = sns.color_palette("deep", len(topology))
+        _state_colors = dict(zip(
+            range(3),
+            ['#b9b9b9', '#777777', '#3b3b3b'
+             ]))  # bold assumption, that there are never more than 3 states
+        _token_colors = dict(zip(topology.keys(), c))
+        _atom_colors = {}
+        for token, color in _token_colors.items():
+            token_model = np.unique(topology[token])
+            brightness_mod = list(
+                reversed(np.linspace(0.8, 0.2, len(token_model)))
+            )  # this way with len=1 we use 0.8 instead of 0.2
+            for i, atom in enumerate(token_model):
+                _atom_colors[atom] = tuple(
+                    [cc * brightness_mod[i] for cc in color])
+
+        # To be save if a stream is missing, although likely more will break in that case.
+        if '' not in _state_colors: _state_colors[''] = '#b9b9b9'
+        if '' not in _token_colors: _token_colors[''] = '#b9b9b9'
+        if '' not in _atom_colors: _atom_colors[''] = '#b9b9b9'
+
+        return _token_colors, _atom_colors, _state_colors

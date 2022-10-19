@@ -36,7 +36,8 @@ class Draw_lines(View_MPL):
         "n_plots": 4,
         "xAxisLength": 5000,
         "sample_rate": 1000,
-        "ylim": (-1.1, 1.1)
+        "ylim": (-1.1, 1.1),
+        "disp_yticks": False
     }
 
     # TODO: move the sample rate into a data_stream?
@@ -45,6 +46,7 @@ class Draw_lines(View_MPL):
                  xAxisLength=5000,
                  sample_rate=1000,
                  ylim=(-1.1, 1.1),
+                 disp_yticks=False,
                  name="Draw Output Lines",
                  **kwargs):
         super().__init__(name=name, **kwargs)
@@ -52,6 +54,7 @@ class Draw_lines(View_MPL):
         self.xAxisLength = xAxisLength
         self.sample_rate = sample_rate
         self.ylim = ylim
+        self.disp_yticks = disp_yticks
         self.n_plots = n_plots
 
         # computation process
@@ -68,7 +71,8 @@ class Draw_lines(View_MPL):
             "n_plots": self.n_plots, # TODO: consider if we could make this max_plots so that the data stream might also contain less than the specified amount of plots
             "xAxisLength": self.xAxisLength,
             "sample_rate": self.sample_rate,
-            "ylim": self.ylim
+            "ylim": self.ylim,
+            "disp_yticks": self.disp_yticks,
            }
 
     def _init_draw(self, subfig):
@@ -81,7 +85,8 @@ class Draw_lines(View_MPL):
         for name, ax in zip(self.channel_names, axes):
             ax.set_ylim(*self.ylim)
             ax.set_xlim(0, self.xAxisLength)
-            ax.set_yticks([])
+            if not self.disp_yticks:
+                ax.set_yticks([])
 
             ticks = np.linspace(0, self.xAxisLength, 11).astype(np.int)
             ax.set_xticks(ticks)
