@@ -181,7 +181,7 @@ class Draw_broken_bars(View_MPL):
             # self._emit_draw(recognition=recognition, colors=self.colors, annotation=None)
         
         for i, sequence in enumerate(classes):
-            self.buffer[i] += list(sequence)
+            self.buffer[i] = (self.buffer[i] + list(sequence))[-self.xAxisLength:]
 
         self._emit_draw(classes=self.buffer) # TODO: add mem or batch before or inside this...
 
