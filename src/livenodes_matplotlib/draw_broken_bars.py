@@ -29,8 +29,10 @@ def convert_list_pos(itms, x_max, yrange):
         n_itms = len(list(group))
         next_start = start + n_itms
         pos.append((start, next_start))
+        # pos.append((start, next_start - 1))
         names.append(act)
         start = next_start
+        # print('|', n_itms, act)
     # print(names[0], start, sum([y - x for x, y in pos]), len(itms), multiplier)
     return names, convert_pos(pos, yrange)
 
@@ -144,6 +146,9 @@ class Draw_broken_bars(View_MPL):
                     bar_objs, txt_fout_objs, txt_fin_objs, self.verts,
                     self.names): #, self._bar_colors):
                 bar_obj.set_verts(verts)
+                # print('-----')
+                # for v in verts:
+                #     print(v)
                 # bar_obj.set_facecolor([colors[name] for name in names])
                 tx_out.set_text(names[0])
                 tx_in.set_text(names[-1])
@@ -182,6 +187,9 @@ class Draw_broken_bars(View_MPL):
         
         for i, sequence in enumerate(classes):
             self.buffer[i] = (self.buffer[i] + list(sequence))[-self.xAxisLength:]
+                
+        # print('--')
+        # print(self.buffer)
 
         self._emit_draw(classes=self.buffer) # TODO: add mem or batch before or inside this...
 
