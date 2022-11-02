@@ -54,7 +54,7 @@ class Draw_hbars(View_MPL):
         self.xData = np.zeros(n_plots)
 
         # render process
-        self.channel_names = ["" for _ in range(n_plots)]
+        self.channels = ["" for _ in range(n_plots)]
 
     def _settings(self):
         return {\
@@ -70,7 +70,7 @@ class Draw_hbars(View_MPL):
         if self.n_plots <= 1:
             axes = [axes]
 
-        for name, ax in zip(self.channel_names, axes):
+        for name, ax in zip(self.channels, axes):
             ax.set_ylim(0, 1)
             ax.set_yticks([])
             ax.yaxis.grid(False)
@@ -99,17 +99,17 @@ class Draw_hbars(View_MPL):
                     va='top',
                     ha='left',
                     transform=ax.transAxes)
-            for name, ax in zip(self.channel_names, axes)
+            for name, ax in zip(self.channels, axes)
         ]
 
-        def update(data, channel_names):
+        def update(data, channels):
             nonlocal self
            
-            if self.channel_names != channel_names:
-                self.channel_names = channel_names
+            if self.channels != channels:
+                self.channels = channels
 
                 for i, label in enumerate(self.labels):
-                    label.set_text(self.channel_names[i])
+                    label.set_text(self.channels[i])
 
             for i in range(self.n_plots):
                 self.hbars[i].set_width(data[i])
@@ -118,18 +118,18 @@ class Draw_hbars(View_MPL):
 
         return update
 
-    def _should_process(self, data=None, channel_names=None):
+    def _should_process(self, data=None, channels=None):
         return data is not None and \
-            (self.channel_names is not None or channel_names is not None)
+            (self.channels is not None or channels is not None)
 
     # data should follow the (batch/file, time, channel) format
-    def process(self, data, channel_names=None, **kwargs):
-        if channel_names is not None:
-            self.channel_names = channel_names
+    def process(self, data, channels=None, **kwargs):
+        if channels is not None:
+            self.channels = channels
 
         # if (batch/file, time, channel)
         d = np.vstack(np.array(data)[:, :, :self.n_plots])
 
         # TODO: consider if we really always want to send the channel names? -> seems an unecessary overhead (but cleaner code atm, maybe massage later...)
         # self.debug('emitting draw', self.yData.shape)
-        self._emit_draw(data=d[-1], channel_names=self.channel_names)
+        self._emit_draw(data=d[-1], channels=self.channels)

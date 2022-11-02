@@ -87,7 +87,7 @@ class Draw_gmm(Draw_scatter):
         self.ax.set_xlabel(self.plot_names[0])
         self.ax.set_ylabel(self.plot_names[1])
 
-        def update(data, atom_colors, gmms, hypo_states, channel_names):
+        def update(data, atom_colors, gmms, states, channels):
             nonlocal self, subfig, super_update
 
             # only read the meta and prew_draw the gmms if we have created the idx (which we need the channel names for)
@@ -103,7 +103,7 @@ class Draw_gmm(Draw_scatter):
 
             if self.idx is None:
                 # yes, we need this twice, this here is on the plotting process
-                self.idx = [channel_names.index(x) for x in self.plot_names]
+                self.idx = [channels.index(x) for x in self.plot_names]
 
             if gmms is not None and self.ells_list is None:
                 self.model_ell_map = {
@@ -116,47 +116,47 @@ class Draw_gmm(Draw_scatter):
                 self.ells_list = list(
                     np.concatenate(list(self.model_ell_map.values()), axis=0))
 
-            if hypo_states is not None and len(
-                    hypo_states) > 0 and self.model_ell_map is not None:
+            if states is not None and len(
+                    states) > 0 and self.model_ell_map is not None:
                 for model_name, ells in self.model_ell_map.items():
-                    if model_name in hypo_states[:self.n_mixtures]:
+                    if model_name in states[:self.n_mixtures]:
                         for ell in ells:
                             ell.set_visible(True)
-                            # ell.set_color(self.order_colors[hypo_states.index(model_name)])
+                            # ell.set_color(self.order_colors[states.index(model_name)])
                     else:
                         for ell in ells:
                             ell.set_visible(False)
 
             return self.ells_list + super_update(data=data,
-                                                 channel_names=channel_names)
+                                                 channels=channels)
 
         return update
 
     def _should_process(self,
                         data=None,
-                        channel_names=None,
-                        hmm_meta=None,
-                        hypo_states=None):
+                        channels=None,
+                        meta=None,
+                        states=None):
         return (data is not None) \
-            and (hypo_states is not None) \
-            and (self.channel_names is not None or channel_names is not None) \
-            and (self.atom_colors is not None or hmm_meta is not None) \
+            and (states is not None) \
+            and (self.channels is not None or channels is not None) \
+            and (self.atom_colors is not None or meta is not None) \
 
     def process(self,
                 data,
-                hypo_states,
-                channel_names=None,
-                hmm_meta=None,
+                states,
+                channels=None,
+                meta=None,
                 **kwargs):
-        if channel_names is not None:
-            self.channel_names = channel_names
+        if channels is not None:
+            self.channels = channels
 
             # yes, we need this twice, this here is on the processing process
-            self.idx = [channel_names.index(x) for x in self.plot_names]
+            self.idx = [channels.index(x) for x in self.plot_names]
 
-        if hmm_meta is not None:
-            _, self.atom_colors, _ = self._init_colors(hmm_meta["topology"])
-            self.gmms = hmm_meta.get('gmms')
+        if meta is not None:
+            _, self.atom_colors, _ = self._init_colors(meta["topology"])
+            self.gmms = meta.get('gmms')
 
         # as data is (batch/file, time, channel)
         d = np.vstack(np.array(data)[:, :, self.idx])
@@ -167,8 +167,8 @@ class Draw_gmm(Draw_scatter):
         self._emit_draw(data=self.data[:self.n_scatter_points],
                         atom_colors=self.atom_colors,
                         gmms=self.gmms,
-                        hypo_states=hypo_states,
-                        channel_names=self.channel_names)
+                        states=states,
+                        channels=self.channels)
 
     # TODO: share these between the different hmm draws...
     def _init_colors(self, topology):

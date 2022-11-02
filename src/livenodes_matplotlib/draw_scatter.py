@@ -42,7 +42,7 @@ class Draw_scatter(View_MPL):
             (n_scatter_points, 2))
 
         # render process
-        self.channel_names = list(map(str, range(2)))
+        self.channels = list(map(str, range(2)))
 
     def _settings(self):
         return {\
@@ -69,9 +69,9 @@ class Draw_scatter(View_MPL):
 
         scatter = self.ax.scatter(xData, yData, alpha=alphas)
 
-        # self.labels = [self.ax.text(0.005, 0.95, name, zorder=100, fontproperties=self.ax.xaxis.label.get_font_properties(), rotation='horizontal', va='top', ha='left', transform = ax.transAxes) for name, ax in zip(self.channel_names, axes)]
+        # self.labels = [self.ax.text(0.005, 0.95, name, zorder=100, fontproperties=self.ax.xaxis.label.get_font_properties(), rotation='horizontal', va='top', ha='left', transform = ax.transAxes) for name, ax in zip(self.channels, axes)]
 
-        def update(data, channel_names):
+        def update(data, channels):
             nonlocal self
             # Not sure why the changes part doesn't work, (not even with zorder)
             # -> could make stuff more efficient, but well...
@@ -83,14 +83,14 @@ class Draw_scatter(View_MPL):
 
         return update
 
-    def _should_process(self, data=None, channel_names=None):
+    def _should_process(self, data=None, channels=None):
         return (data is not None) and \
-            (self.channel_names is not None or channel_names is not None)
+            (self.channels is not None or channels is not None)
 
     # data should follow the (batch/file, time, channel) format
-    def process(self, data, channel_names=None, **kwargs):
-        if channel_names is not None:
-            self.channel_names = channel_names
+    def process(self, data, channels=None, **kwargs):
+        if channels is not None:
+            self.channels = channels
 
         # if (batch/file, time, channel)
         d = np.vstack(np.array(data)[:, :, :2])
@@ -103,4 +103,4 @@ class Draw_scatter(View_MPL):
 
         # TODO: consider if we really always want to send the channel names? -> seems an unecessary overhead (but cleaner code atm, maybe massage later...)
         self._emit_draw(data=self.data[-self.n_scatter_points:],
-                        channel_names=self.channel_names)
+                        channels=self.channels)

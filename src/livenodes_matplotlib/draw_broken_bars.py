@@ -4,8 +4,7 @@ import seaborn as sns
 
 from livenodes.viewer import View_MPL
 from typing import NamedTuple
-from .ports import Port_two_dim_any
-from livenodes_core_nodes.ports import Ports_empty, Port_Vector, Port_Dict, Port_Vector_of_Strings
+from .ports import Port_two_dim_any, Ports_empty, Port_Vector_of_Strings
 
 class Ports_in(NamedTuple):
     classes: Port_two_dim_any = Port_two_dim_any("classes")
@@ -69,7 +68,7 @@ class Draw_broken_bars(View_MPL):
 
         self.verts = [[]] * n_plots 
         self.names = [['']] * n_plots 
-        self.channel_names = None
+        self.channels = None
 
     def _settings(self):
         return {\
@@ -158,14 +157,14 @@ class Draw_broken_bars(View_MPL):
 
     def _should_process(self,
                         classes=None,
-                        channel_names=None):
+                        channels=None):
 
         return (classes is not None) \
-            and (not self._is_input_connected(self.ports_in.channels) or (self.channel_names is not None) or (channel_names is not None))
+            and (not self._is_input_connected(self.ports_in.channels) or (self.channels is not None) or (channels is not None))
 
     def process(self,
                 classes=None,
-                channel_names=None,
+                channels=None,
                 **kwargs):
         # if hmm_meta is not None:
         #     token_colors, atom_colors, state_colors = self._init_colors(
@@ -192,28 +191,3 @@ class Draw_broken_bars(View_MPL):
         # print(self.buffer)
 
         self._emit_draw(classes=self.buffer) # TODO: add mem or batch before or inside this...
-
-    # TODO: move this to utils or something...
-    def _init_colors(self, topology):
-        c = sns.color_palette("deep", len(topology))
-        _state_colors = dict(zip(
-            range(3),
-            ['#b9b9b9', '#777777', '#3b3b3b'
-             ]))  # bold assumption, that there are never more than 3 states
-        _token_colors = dict(zip(topology.keys(), c))
-        _atom_colors = {}
-        for token, color in _token_colors.items():
-            token_model = np.unique(topology[token])
-            brightness_mod = list(
-                reversed(np.linspace(0.8, 0.2, len(token_model)))
-            )  # this way with len=1 we use 0.8 instead of 0.2
-            for i, atom in enumerate(token_model):
-                _atom_colors[atom] = tuple(
-                    [cc * brightness_mod[i] for cc in color])
-
-        # To be save if a stream is missing, although likely more will break in that case.
-        if '' not in _state_colors: _state_colors[''] = '#b9b9b9'
-        if '' not in _token_colors: _token_colors[''] = '#b9b9b9'
-        if '' not in _atom_colors: _atom_colors[''] = '#b9b9b9'
-
-        return _token_colors, _atom_colors, _state_colors
