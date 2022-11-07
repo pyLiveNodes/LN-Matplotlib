@@ -63,7 +63,7 @@ class Draw_scatter(View_MPL):
         # self.ax.set_xlabel(self.plot_names[0])
         # self.ax.set_ylabel(self.plot_names[1])
 
-        alphas = np.linspace(0.1, 1, self.n_scatter_points)
+        alphas = np.linspace(0.2, 1, self.n_scatter_points)
         xData = self.data[:, 0]
         yData = self.data[:, 1]
 
@@ -72,7 +72,7 @@ class Draw_scatter(View_MPL):
         # self.labels = [self.ax.text(0.005, 0.95, name, zorder=100, fontproperties=self.ax.xaxis.label.get_font_properties(), rotation='horizontal', va='top', ha='left', transform = ax.transAxes) for name, ax in zip(self.channels, axes)]
 
         def update(data, channels):
-            nonlocal self
+            nonlocal scatter
             # Not sure why the changes part doesn't work, (not even with zorder)
             # -> could make stuff more efficient, but well...
             # changes = []
