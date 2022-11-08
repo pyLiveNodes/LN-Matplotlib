@@ -8,7 +8,7 @@ from .ports import Ports_data, Port_Data, Port_Vector_of_Strings
 
 class Ports_out(NamedTuple):
     data: Port_Data = Port_Data("Data")
-    annotation: Port_Vector_of_Strings = Port_Vector_of_Strings("Annotation")
+    annot: Port_Vector_of_Strings = Port_Vector_of_Strings("Annotation")
 
 
 # TODO: figure out how to resolve these name clashes
