@@ -12,7 +12,7 @@ dependencies = [
     "livenodes>=0.9b1",
     "numpy>=1.22.1",
     "seaborn~=0.11.2",
-    "matplotlib>=3.5.1",
+    "matplotlib~=3.5.1",
 ]
 
 [project.entry-points."livenodes.nodes"]
