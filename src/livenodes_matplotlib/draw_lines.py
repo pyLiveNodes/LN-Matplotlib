@@ -150,11 +150,14 @@ class Draw_lines(View_MPL):
         if channels is not None:
             self.channels = channels
 
-        # if (batch/file, time, channel)
+        # data format is (batch/file, time, channel)
+        # first subselect the channels we want to use
+        # then concatenate batches
         d = np.vstack(np.array(data)[:, :, :self.n_plots])
+        # d is now of shape (time, channel)
+        # now only keep the last xAxisLength values
+        d = d[-self.xAxisLength:,:]
 
-        # if (batch/file, time, channel)
-        # d = np.vstack(np.array(data)[:, :self.n_plots])
 
         # self.info(np.array(data).shape, d.shape, self.yData.shape)
 
