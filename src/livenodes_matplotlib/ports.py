@@ -13,8 +13,8 @@ class Port_Data(Port):
     def __init__(self, name='Data', optional=False):
         super().__init__(name, optional)
 
-    @staticmethod
-    def check_value(value):
+    @classmethod
+    def check_value(cls, value):
         if not isinstance(value, np.ndarray):
             return False, "Should be numpy array;"
         elif len(value.shape) != 3:
@@ -22,7 +22,7 @@ class Port_Data(Port):
         return True, None
 
 
-class Port_Single_Channel_Int(Port):
+class Port_Int(Port):
 
     example_values = [
         0,
@@ -32,14 +32,14 @@ class Port_Single_Channel_Int(Port):
     def __init__(self, name='Trigger', optional=False):
         super().__init__(name, optional)
 
-    @staticmethod
-    def check_value(value):
+    @classmethod
+    def check_value(cls, value):
         if type(value) != int:
             return False, "Should be int;"
         return True, None
 
 
-class Port_Single_Channel_Number(Port):
+class Port_Number(Port):
 
     example_values = [
         0,
@@ -50,8 +50,8 @@ class Port_Single_Channel_Number(Port):
     def __init__(self, name='Trigger', optional=False):
         super().__init__(name, optional)
 
-    @staticmethod
-    def check_value(value):
+    @classmethod
+    def check_value(cls, value):
         if not isinstance(value, numbers.Number):
             return False, "Should be number;"
         return True, None
@@ -66,13 +66,13 @@ class Port_two_dim_any(Port):
     def __init__(self, name='Channel Names', optional=False):
         super().__init__(name, optional)
 
-    @staticmethod
-    def check_value(value):
+    @classmethod
+    def check_value(cls, value):
         if not (type(value) == list and type(value[0]) == list):
             return False, "Should be list of lists;"
         return True, None
 
-class Port_Vector_of_Strings(Port):
+class Port_List_Str(Port):
 
     example_values = [
         ["EMG1", "EMG2"]
@@ -81,8 +81,8 @@ class Port_Vector_of_Strings(Port):
     def __init__(self, name='Channel Names', optional=False):
         super().__init__(name, optional)
 
-    @staticmethod
-    def check_value(value):
+    @classmethod
+    def check_value(cls, value):
         if not (type(value) == list and type(value[0]) == str):
             return False, "Should be list of strings;"
         elif len(set(value)) != len(value):
@@ -90,7 +90,7 @@ class Port_Vector_of_Strings(Port):
         return True, None
 
 
-class Port_Vector_of_Ints(Port):
+class Port_List_Int(Port):
 
     example_values = [
         [0, 1, 20, -15]
@@ -99,8 +99,8 @@ class Port_Vector_of_Ints(Port):
     def __init__(self, name='File', optional=False):
         super().__init__(name, optional)
 
-    @staticmethod
-    def check_value(value):
+    @classmethod
+    def check_value(cls, value):
         if not (type(value) == list and type(value[0]) == int):
             return False, "Should be list of ints;"
         return True, None
@@ -116,8 +116,8 @@ class Port_Dict(Port):
     def __init__(self, name='Meta', optional=False):
         super().__init__(name, optional)
 
-    @staticmethod
-    def check_value(value):
+    @classmethod
+    def check_value(cls, value):
         if type(value) != dict:
             return False, "Should be dict;"
         return True, None
@@ -135,4 +135,4 @@ class Ports_data(NamedTuple):
 
 class Ports_data_channels(NamedTuple):
     data: Port_Data = Port_Data("Data")
-    channels: Port_Vector_of_Strings = Port_Vector_of_Strings("Channel Names")
+    channels: Port_List_Str = Port_List_Str("Channel Names")

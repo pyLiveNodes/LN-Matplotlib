@@ -4,11 +4,11 @@ import seaborn as sns
 
 from livenodes.viewer import View_MPL
 from typing import NamedTuple
-from .ports import Port_two_dim_any, Ports_empty, Port_Vector_of_Strings
+from .ports import Port_two_dim_any, Ports_empty, Port_List_Str
 
 class Ports_in(NamedTuple):
     classes: Port_two_dim_any = Port_two_dim_any("classes")
-    channels: Port_Vector_of_Strings = Port_Vector_of_Strings("Channel Names")
+    channels: Port_List_Str = Port_List_Str("Channel Names")
 
 
 def convert_pos(pos, yrange):

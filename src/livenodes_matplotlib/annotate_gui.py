@@ -4,11 +4,11 @@ from matplotlib.widgets import TextBox, Button
 from livenodes.viewer import View_MPL
 
 from typing import NamedTuple
-from .ports import Ports_data, Port_Data, Port_Vector_of_Strings
+from .ports import Ports_data, Port_Data, Port_List_Str
 
 class Ports_out(NamedTuple):
     data: Port_Data = Port_Data("Data")
-    annot: Port_Vector_of_Strings = Port_Vector_of_Strings("Annotation")
+    annot: Port_List_Str = Port_List_Str("Annotation")
 
 
 # TODO: figure out how to resolve these name clashes

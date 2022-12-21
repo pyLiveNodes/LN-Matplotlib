@@ -5,11 +5,11 @@ import matplotlib as mpl
 from .draw_scatter import Draw_scatter
 
 from typing import NamedTuple
-from .ports import Port_Dict, Ports_empty, Port_Data, Port_Vector_of_Strings
+from .ports import Port_Dict, Ports_empty, Port_Data, Port_List_Str
 
 class Ports_in(NamedTuple):
     data: Port_Data = Port_Data("Data")
-    channels: Port_Vector_of_Strings = Port_Vector_of_Strings("Channel Names")
+    channels: Port_List_Str = Port_List_Str("Channel Names")
     meta: Port_Dict = Port_Dict("HMM Meta")
     states: Port_Dict = Port_Dict("Hypo States")
 
