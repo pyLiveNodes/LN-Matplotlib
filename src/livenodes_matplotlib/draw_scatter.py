@@ -92,11 +92,14 @@ class Draw_scatter(View_MPL):
         if channels is not None:
             self.channels = channels
 
-        # if (batch/file, time, channel)
+        # data format is (batch/file, time, channel)
+        # first subselect the channels we want to use
+        # then concatenate batches
         d = np.vstack(np.array(data)[:, :, :2])
+        # d is now of shape (time, channel)
+        # now only keep the last xAxisLength values
+        d = d[-self.xAxisLength:,:]
 
-        # if (batch/file, time, channel)
-        # d = np.vstack(np.array(data)[:, :2])
 
         self.data = np.roll(self.data, -d.shape[0], axis=0)
         self.data[-d.shape[0]:] = d
