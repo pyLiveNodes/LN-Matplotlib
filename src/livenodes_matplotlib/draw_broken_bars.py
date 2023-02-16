@@ -4,10 +4,10 @@ import seaborn as sns
 
 from livenodes.viewer import View_MPL
 from typing import NamedTuple
-from .ports import Port_two_dim_any, Ports_empty, Port_List_Str
+from livenodes_core_nodes.ports import Port_Matrix_Any, Ports_empty, Port_List_Str
 
 class Ports_in(NamedTuple):
-    classes: Port_two_dim_any = Port_two_dim_any("classes")
+    classes: Port_Matrix_Any = Port_Matrix_Any("classes")
     channels: Port_List_Str = Port_List_Str("Channel Names")
 
 

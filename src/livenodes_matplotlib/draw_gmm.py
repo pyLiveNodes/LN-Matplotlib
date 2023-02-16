@@ -5,7 +5,7 @@ import matplotlib as mpl
 from .draw_scatter import Draw_scatter
 
 from typing import NamedTuple
-from .ports import Port_Dict, Ports_empty, Port_Data, Port_List_Str
+from livenodes_core_nodes.ports import Port_Dict, Ports_empty, Port_Data, Port_List_Str
 
 class Ports_in(NamedTuple):
     data: Port_Data = Port_Data("Data")

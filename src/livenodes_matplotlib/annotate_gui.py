@@ -4,7 +4,7 @@ from matplotlib.widgets import TextBox, Button
 from livenodes.viewer import View_MPL
 
 from typing import NamedTuple
-from .ports import Ports_data, Port_Data, Port_List_Str
+from livenodes_core_nodes.ports import Ports_data, Port_Data, Port_List_Str
 
 class Ports_out(NamedTuple):
     data: Port_Data = Port_Data("Data")

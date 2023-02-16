@@ -1,6 +1,6 @@
 from livenodes.viewer import View_MPL
 from typing import NamedTuple
-from .ports import Ports_empty, Port_Data, Port_Dict, Port_List_Str
+from livenodes_core_nodes.ports import Ports_empty, Port_Data, Port_Dict, Port_List_Str
 
 class Ports_in(NamedTuple):
     text: Port_List_Str = Port_List_Str("Text")

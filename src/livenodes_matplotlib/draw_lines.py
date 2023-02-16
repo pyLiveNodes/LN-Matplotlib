@@ -12,7 +12,7 @@ from livenodes.viewer import View_MPL
 #
 # The main advantage of this is, that the pipeline and render loops are separated and one doesn't slow down the other
 #
-from .ports import Ports_data_channels, Ports_empty
+from livenodes_core_nodes.ports import Ports_data_channels, Ports_empty
 
 
 # class Draw_lines_mpl(View_MPL):

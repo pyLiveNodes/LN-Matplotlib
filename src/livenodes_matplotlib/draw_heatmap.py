@@ -1,7 +1,7 @@
 import numpy as np
 
 from livenodes.viewer import View_MPL
-from .ports import Ports_data, Ports_empty
+from livenodes_core_nodes.ports import Ports_data, Ports_empty
 
 
 class Draw_heatmap(View_MPL):
@@ -80,4 +80,7 @@ class Draw_heatmap(View_MPL):
     def process(self, data,  **kwargs):  
         # mask = np.tri(data.shape[0], k=-1).T
         # self._emit_draw(data=np.ma.array(data, mask=mask))
-        self._emit_draw(data=data)
+        
+        # only every draw the last batch
+        # since no history is displayed we also don't need to keep it
+        self._emit_draw(data=data[-1])
