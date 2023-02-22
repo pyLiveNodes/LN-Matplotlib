@@ -1,4 +1,4 @@
-# Livenodes
+# LN Matplotlib
 
 ```{eval-rst}
 .. toctree::
