@@ -4,11 +4,11 @@ from matplotlib.widgets import TextBox, Button
 from livenodes.viewer import View_MPL
 
 from typing import NamedTuple
-from .ports import Ports_data, Port_Data, Port_Vector_of_Strings
+from livenodes_core_nodes.ports import Ports_data, Port_Data, Port_List_Str
 
 class Ports_out(NamedTuple):
     data: Port_Data = Port_Data("Data")
-    annotation: Port_Vector_of_Strings = Port_Vector_of_Strings("Annotation")
+    annot: Port_List_Str = Port_List_Str("Annotation")
 
 
 # TODO: figure out how to resolve these name clashes
@@ -50,13 +50,10 @@ class Annotate_gui(View_MPL):
 
     def process(self, data, **kwargs):
         # IMPORTANT: we assume that the length of data is always short enough that we do not care about timing issues with the label
-        self._emit_data(data)
-
         while not self.target_q.empty():
             self.fall_back_target, self.current_target = self.target_q.get()
 
-        self._emit_data([self.current_target] * len(data),
-                        channel="Annotation")
+        return self.ret(data=data, annot=[self.current_target] * len(data))
 
     def __activity_toggle_rec(self, event):
         if self.recording:

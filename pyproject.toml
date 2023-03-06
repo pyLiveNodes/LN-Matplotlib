@@ -9,20 +9,27 @@ authors = [
 # pip install . --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple
 # pip install -e . --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple
 dependencies = [
-    "livenodes>=0.8b1",
+    "livenodes>=0.9.1",
+    "livenodes-core-nodes>=0.9.1",
     "numpy>=1.22.1",
-    "seaborn==0.11.2",
-    "matplotlib==3.5.1",
+    "seaborn~=0.11.2",
+    "matplotlib~=3.5.1",
+
+    "setuptools>=60.0.0, <67"
 ]
+# setuptools version is specified due to a problem in livenodes (presumably phx-class-registry), which causes an deprectation error
+# Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+# FIX upstream and remove here
 
 [project.entry-points."livenodes.nodes"]
 annotate_gui = "livenodes_matplotlib.annotate_gui:Annotate_gui"
+draw_broken_bars = "livenodes_matplotlib.draw_broken_bars:Draw_broken_bars"
+draw_stacked_bars = "livenodes_matplotlib.draw_stacked_bars:Draw_stacked_bars"
 draw_gmm = "livenodes_matplotlib.draw_gmm:Draw_gmm"
+draw_heatmap = "livenodes_matplotlib.draw_heatmap:Draw_heatmap"
 draw_hbars = "livenodes_matplotlib.draw_hbars:Draw_hbars"
 draw_lines = "livenodes_matplotlib.draw_lines:Draw_lines"
-draw_recognition = "livenodes_matplotlib.draw_recognition:Draw_recognition"
 draw_scatter = "livenodes_matplotlib.draw_scatter:Draw_scatter"
-draw_search_graph = "livenodes_matplotlib.draw_search_graph:Draw_search_graph"
 draw_text_display = "livenodes_matplotlib.draw_text_display:Draw_text_display"
 
 
