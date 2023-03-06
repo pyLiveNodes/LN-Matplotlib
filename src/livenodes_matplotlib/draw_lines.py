@@ -12,7 +12,7 @@ from livenodes.viewer import View_MPL
 #
 # The main advantage of this is, that the pipeline and render loops are separated and one doesn't slow down the other
 #
-from .ports import Ports_data_channels, Ports_empty
+from livenodes_core_nodes.ports import Ports_data_channels, Ports_empty
 
 
 # class Draw_lines_mpl(View_MPL):
@@ -36,7 +36,8 @@ class Draw_lines(View_MPL):
         "n_plots": 4,
         "xAxisLength": 5000,
         "sample_rate": 1000,
-        "ylim": (-1.1, 1.1)
+        "ylim": (-1.1, 1.1),
+        "disp_yticks": False
     }
 
     # TODO: move the sample rate into a data_stream?
@@ -45,6 +46,7 @@ class Draw_lines(View_MPL):
                  xAxisLength=5000,
                  sample_rate=1000,
                  ylim=(-1.1, 1.1),
+                 disp_yticks=False,
                  name="Draw Output Lines",
                  **kwargs):
         super().__init__(name=name, **kwargs)
@@ -52,6 +54,7 @@ class Draw_lines(View_MPL):
         self.xAxisLength = xAxisLength
         self.sample_rate = sample_rate
         self.ylim = ylim
+        self.disp_yticks = disp_yticks
         self.n_plots = n_plots
 
         # computation process
@@ -60,7 +63,7 @@ class Draw_lines(View_MPL):
             (xAxisLength, n_plots))
 
         # render process
-        self.channel_names = ["" for _ in range(n_plots)]
+        self.channels = ["" for _ in range(n_plots)]
 
     def _settings(self):
         return {\
@@ -68,7 +71,8 @@ class Draw_lines(View_MPL):
             "n_plots": self.n_plots, # TODO: consider if we could make this max_plots so that the data stream might also contain less than the specified amount of plots
             "xAxisLength": self.xAxisLength,
             "sample_rate": self.sample_rate,
-            "ylim": self.ylim
+            "ylim": self.ylim,
+            "disp_yticks": self.disp_yticks,
            }
 
     def _init_draw(self, subfig):
@@ -78,10 +82,11 @@ class Draw_lines(View_MPL):
         if self.n_plots <= 1:
             axes = [axes]
 
-        for name, ax in zip(self.channel_names, axes):
+        for name, ax in zip(self.channels, axes):
             ax.set_ylim(*self.ylim)
             ax.set_xlim(0, self.xAxisLength)
-            ax.set_yticks([])
+            if not self.disp_yticks:
+                ax.set_yticks([])
 
             ticks = np.linspace(0, self.xAxisLength, 11).astype(np.int)
             ax.set_xticks(ticks)
@@ -109,12 +114,12 @@ class Draw_lines(View_MPL):
                     va='top',
                     ha='left',
                     transform=ax.transAxes)
-            for name, ax in zip(self.channel_names, axes)
+            for name, ax in zip(self.channels, axes)
         ]
 
-        # self.labels = [ax.text(0, 0.5, name, fontproperties=ax.xaxis.label.get_font_properties(), rotation='vertical', va='center', ha='right', transform = ax.transAxes) for name, ax in zip(self.channel_names, axes)]
+        # self.labels = [ax.text(0, 0.5, name, fontproperties=ax.xaxis.label.get_font_properties(), rotation='vertical', va='center', ha='right', transform = ax.transAxes) for name, ax in zip(self.channels, axes)]
 
-        def update(data, channel_names):
+        def update(data, channels):
             nonlocal self
             # Not sure why the changes part doesn't work, (not even with zorder)
             # -> could make stuff more efficient, but well...
@@ -123,11 +128,11 @@ class Draw_lines(View_MPL):
             # as the x-axis is reversed
             # data = np.array(data)[::-1]
 
-            if self.channel_names != channel_names:
-                self.channel_names = channel_names
+            if self.channels != channels:
+                self.channels = channels
 
                 for i, label in enumerate(self.labels):
-                    label.set_text(self.channel_names[i])
+                    label.set_text(self.channels[i])
 
             for i in range(self.n_plots):
                 self.lines[i].set_ydata(data[i][::-1])
@@ -136,20 +141,23 @@ class Draw_lines(View_MPL):
 
         return update
 
-    def _should_process(self, data=None, channel_names=None):
+    def _should_process(self, data=None, channels=None):
         return data is not None and \
-            (self.channel_names is not None or channel_names is not None)
+            (self.channels is not None or channels is not None)
 
     # data should follow the (batch/file, time, channel) format
-    def process(self, data, channel_names=None, **kwargs):
-        if channel_names is not None:
-            self.channel_names = channel_names
+    def process(self, data, channels=None, **kwargs):
+        if channels is not None:
+            self.channels = channels
 
-        # if (batch/file, time, channel)
+        # data format is (batch/file, time, channel)
+        # first subselect the channels we want to use
+        # then concatenate batches
         d = np.vstack(np.array(data)[:, :, :self.n_plots])
+        # d is now of shape (time, channel)
+        # now only keep the last xAxisLength values
+        d = d[-self.xAxisLength:,:]
 
-        # if (batch/file, time, channel)
-        # d = np.vstack(np.array(data)[:, :self.n_plots])
 
         # self.info(np.array(data).shape, d.shape, self.yData.shape)
 
@@ -159,4 +167,4 @@ class Draw_lines(View_MPL):
         # TODO: consider if we really always want to send the channel names? -> seems an unecessary overhead (but cleaner code atm, maybe massage later...)
         # self.debug('emitting draw', self.yData.shape)
         self._emit_draw(data=list(self.yData.T),
-                        channel_names=self.channel_names)
+                        channels=self.channels)
