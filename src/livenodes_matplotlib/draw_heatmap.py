@@ -1,8 +1,11 @@
-import numpy as np
-
 from livenodes.viewer import View_MPL
 from livenodes_core_nodes.ports import Ports_data, Ports_empty
 
+from typing import NamedTuple
+from livenodes_core_nodes.ports import Port_Matrix_Number, Ports_data, Port_Data
+
+class Ports_in(NamedTuple):
+    data: Port_Matrix_Number = Port_Matrix_Number('Matrix')
 
 class Draw_heatmap(View_MPL):
     """
@@ -13,7 +16,7 @@ class Draw_heatmap(View_MPL):
     Draws on a matplotlib canvas.
     """
 
-    ports_in = Ports_data()
+    ports_in = Ports_in()
     ports_out = Ports_empty()
 
     category = "Draw"
@@ -83,4 +86,4 @@ class Draw_heatmap(View_MPL):
         
         # only every draw the last batch
         # since no history is displayed we also don't need to keep it
-        self._emit_draw(data=data[-1])
+        self._emit_draw(data=data)

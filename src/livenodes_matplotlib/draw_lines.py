@@ -88,7 +88,7 @@ class Draw_lines(View_MPL):
             if not self.disp_yticks:
                 ax.set_yticks([])
 
-            ticks = np.linspace(0, self.xAxisLength, 11).astype(np.int)
+            ticks = np.linspace(0, self.xAxisLength, 11).astype(int)
             ax.set_xticks(ticks)
             ax.set_xticklabels(-ticks / self.sample_rate)
             ax.invert_xaxis()
