@@ -76,7 +76,7 @@ class Draw_hbars(View_MPL):
             ax.yaxis.grid(False)
 
             ax.set_xlim(*self.xlim)
-            # ticks = np.linspace(*self.xlim, 10).astype(np.int)
+            # ticks = np.linspace(*self.xlim, 10).astype(int)
             # ax.set_xticks(ticks)
             # ax.xaxis.grid(False)
 
