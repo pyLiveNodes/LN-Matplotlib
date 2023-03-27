@@ -6,17 +6,17 @@ The Livenodes Matplotlib package provides several plotting nodes (lines, heatmap
 
 Any contribution is welcome! These projects take more time, than I can muster, so feel free to create issues for everything that you think might work better and feel free to create a MR for them as well!
 
-Have fun and good coding!
+Have fun and good coding!  
 Yale
 
-# Installation
+## Installation
 
 `pip install livenodes_matplotlib --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple`
 
-# Docs
+## Docs
 
 You can find the docs [here](https://livenodes.pages.csl.uni-bremen.de/packages/livenodes_matplotlib/readme.html).
 
-# Restrictions
+## Restrictions
 
 None, just pure python, matplotlib and numpy.
