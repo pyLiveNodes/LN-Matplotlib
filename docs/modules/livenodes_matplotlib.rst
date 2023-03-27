@@ -4,10 +4,10 @@ livenodes\_matplotlib package
 Submodules
 ----------
 
-livenodes\_matplotlib.annotate\_gui module
-------------------------------------------
+livenodes\_matplotlib.draw\_broken\_bars module
+-----------------------------------------------
 
-.. automodule:: livenodes_matplotlib.annotate_gui
+.. automodule:: livenodes_matplotlib.draw_broken_bars
    :members:
    :undoc-members:
    :show-inheritance:
@@ -28,18 +28,18 @@ livenodes\_matplotlib.draw\_hbars module
    :undoc-members:
    :show-inheritance:
 
-livenodes\_matplotlib.draw\_lines module
-----------------------------------------
+livenodes\_matplotlib.draw\_heatmap module
+------------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_lines
+.. automodule:: livenodes_matplotlib.draw_heatmap
    :members:
    :undoc-members:
    :show-inheritance:
 
-livenodes\_matplotlib.draw\_recognition module
-----------------------------------------------
+livenodes\_matplotlib.draw\_lines module
+----------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_recognition
+.. automodule:: livenodes_matplotlib.draw_lines
    :members:
    :undoc-members:
    :show-inheritance:
@@ -52,10 +52,10 @@ livenodes\_matplotlib.draw\_scatter module
    :undoc-members:
    :show-inheritance:
 
-livenodes\_matplotlib.draw\_search\_graph module
+livenodes\_matplotlib.draw\_stacked\_bars module
 ------------------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_search_graph
+.. automodule:: livenodes_matplotlib.draw_stacked_bars
    :members:
    :undoc-members:
    :show-inheritance:
@@ -64,14 +64,6 @@ livenodes\_matplotlib.draw\_text\_display module
 ------------------------------------------------
 
 .. automodule:: livenodes_matplotlib.draw_text_display
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-livenodes\_matplotlib.ports module
-----------------------------------
-
-.. automodule:: livenodes_matplotlib.ports
    :members:
    :undoc-members:
    :show-inheritance:
