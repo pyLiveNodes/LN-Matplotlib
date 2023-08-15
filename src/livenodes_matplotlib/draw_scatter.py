@@ -7,7 +7,7 @@ from livenodes_core_nodes.ports import Ports_data_channels, Ports_empty
 class Draw_scatter(View_MPL):
     """
     Draw all the first two received data channels as scatter plot.
-    
+
     Time is represented via alpha values. The most current point is opaque the furthest point away is at 10% alpha.
 
     Draws on a matplotlib canvas.
@@ -96,10 +96,6 @@ class Draw_scatter(View_MPL):
         # first subselect the channels we want to use
         # then concatenate batches
         d = np.vstack(np.array(data)[:, :, :2])
-        # d is now of shape (time, channel)
-        # now only keep the last xAxisLength values
-        d = d[-self.xAxisLength:,:]
-
 
         self.data = np.roll(self.data, -d.shape[0], axis=0)
         self.data[-d.shape[0]:] = d
