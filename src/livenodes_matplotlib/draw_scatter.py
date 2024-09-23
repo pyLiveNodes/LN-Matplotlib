@@ -1,7 +1,7 @@
 import numpy as np
 
 from livenodes.viewer import View_MPL
-from livenodes_common_ports import Ports_BTS_data_channels, Ports_empty
+from livenodes_common_ports import Ports_ts_data_channels, Ports_empty
 
 
 class Draw_scatter(View_MPL):
@@ -13,7 +13,7 @@ class Draw_scatter(View_MPL):
     Draws on a matplotlib canvas.
     """
 
-    ports_in = Ports_BTS_data_channels()
+    ports_in = Ports_ts_data_channels()
     ports_out = Ports_empty()
 
     category = "Draw"
