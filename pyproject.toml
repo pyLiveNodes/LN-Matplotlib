@@ -12,8 +12,8 @@ dependencies = [
     "livenodes>=0.12.1b1",
     "livenodes-common-ports>=0.12.1b4",
     "numpy>=1.22.1",
-    "seaborn~=0.11.2",
-    "matplotlib~=3.5.1",
+    "seaborn>=0.11.2",
+    "matplotlib>=3.5.1",
 
     "setuptools>=60.0.0"
 ]
