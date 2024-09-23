@@ -1,14 +1,14 @@
 import numpy as np
 
 from livenodes.viewer import View_MPL
-from livenodes_core_nodes.ports import Ports_data, Ports_empty
+from livenodes_common_ports import Ports_BTS_data, Ports_empty
 
 
 class Draw_stacked_bars(View_MPL):
     """
     """
 
-    ports_in = Ports_data()
+    ports_in = Ports_BTS_data()
     ports_out = Ports_empty()
 
     category = "Draw"

@@ -14,8 +14,7 @@ from livenodes.viewer import View_MPL
 #
 
 
-
-from livenodes_core_nodes.ports import Ports_data_channels, Ports_empty
+from livenodes_common_ports import Ports_BTS_data_channels, Ports_empty
 
 
 class Draw_hbars(View_MPL):
@@ -27,7 +26,7 @@ class Draw_hbars(View_MPL):
     Draws on a matplotlib canvas.
     """
 
-    ports_in = Ports_data_channels()
+    ports_in = Ports_BTS_data_channels()
     ports_out = Ports_empty()
 
     category = "Draw"

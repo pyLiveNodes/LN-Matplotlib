@@ -9,17 +9,14 @@ authors = [
 # pip install . --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple
 # pip install -e . --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple
 dependencies = [
-    "livenodes>=0.9.1",
+    "livenodes>=0.12.1b1",
     "livenodes-core-nodes>=0.9.1",
     "numpy>=1.22.1",
     "seaborn~=0.11.2",
     "matplotlib~=3.5.1",
 
-    "setuptools>=60.0.0, <67"
+    "setuptools>=60.0.0"
 ]
-# setuptools version is specified due to a problem in livenodes (presumably phx-class-registry), which causes an deprectation error
-# Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
-# FIX upstream and remove here
 
 [project.entry-points."livenodes.nodes"]
 draw_broken_bars = "livenodes_matplotlib.draw_broken_bars:Draw_broken_bars"
@@ -42,7 +39,7 @@ dev = [
 requires = [
     "setuptools>=60",
     "wheel",
-    "setuptools_scm >= 2.0.0, <3",
+    "setuptools_scm >= 3.0.0",
     "setuptools-git-versioning"
 ]
 build-backend = 'setuptools.build_meta'
@@ -52,5 +49,5 @@ enabled = true
 
 [tool.black]
 line-length = 140
-target-version = ['py36']
+target-version = ['py38']
 skip-string-normalization = true

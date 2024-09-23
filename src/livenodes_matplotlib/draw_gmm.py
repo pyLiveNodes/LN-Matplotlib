@@ -4,10 +4,10 @@ import matplotlib as mpl
 
 from .draw_scatter import Draw_scatter
 
-from typing import NamedTuple
-from livenodes_core_nodes.ports import Port_Dict, Ports_empty, Port_Data, Port_List_Str
+from livenodes import Ports_collection
+from livenodes_common_ports import Port_Dict, Ports_empty, Port_Data, Port_List_Str
 
-class Ports_in(NamedTuple):
+class Ports_in(Ports_collection):
     data: Port_Data = Port_Data("Data")
     channels: Port_List_Str = Port_List_Str("Channel Names")
     meta: Port_Dict = Port_Dict("HMM Meta")

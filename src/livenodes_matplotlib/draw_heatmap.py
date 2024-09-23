@@ -1,10 +1,8 @@
 from livenodes.viewer import View_MPL
-from livenodes_core_nodes.ports import Ports_data, Ports_empty
+from livenodes_common_ports import Port_Matrix_Number, Ports_empty
+from livenodes import Ports_collection
 
-from typing import NamedTuple
-from livenodes_core_nodes.ports import Port_Matrix_Number, Ports_data, Port_Data
-
-class Ports_in(NamedTuple):
+class Ports_in(Ports_collection):
     data: Port_Matrix_Number = Port_Matrix_Number('Matrix')
 
 class Draw_heatmap(View_MPL):
