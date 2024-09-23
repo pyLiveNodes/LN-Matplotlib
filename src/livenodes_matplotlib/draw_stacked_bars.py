@@ -70,5 +70,5 @@ class Draw_stacked_bars(View_MPL):
         return update
 
     # data should follow the (batch/file, time, channel) format
-    def process(self, data,  **kwargs):       
-        self._emit_draw(data=data)
+    def process(self, ts,  **kwargs):       
+        self._emit_draw(data=ts)
