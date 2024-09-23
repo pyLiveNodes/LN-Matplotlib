@@ -117,17 +117,17 @@ class Draw_hbars(View_MPL):
 
         return update
 
-    def _should_process(self, data=None, channels=None):
-        return data is not None and \
+    def _should_process(self, ts=None, channels=None):
+        return ts is not None and \
             (self.channels is not None or channels is not None)
 
     # data should follow the (batch/file, time, channel) format
-    def process(self, data, channels=None, **kwargs):
+    def process(self, ts, channels=None, **kwargs):
         if channels is not None:
             self.channels = channels
 
         # if (batch/file, time, channel)
-        d = np.vstack(np.array(data)[:, :, :self.n_plots])
+        d = np.vstack(np.array(ts)[:, :, :self.n_plots])
 
         # TODO: consider if we really always want to send the channel names? -> seems an unecessary overhead (but cleaner code atm, maybe massage later...)
         # self.debug('emitting draw', self.yData.shape)
