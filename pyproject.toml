@@ -1,5 +1,5 @@
 [project]
-name = "Livenodes-Matplotlib"
+name = "LN-Matplotlib"
 dynamic = ['version']
 description = "LiveNodes: node based live streaming sensor/data and visualization suite."
 authors = [
