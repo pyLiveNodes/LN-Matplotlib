@@ -8,7 +8,7 @@ import pytest
 @pytest.fixture
 def discovered_modules():
     exclude = ['__init__', 'utils', 'ports']
-    modules = glob.glob(join(dirname(__file__), '../src/livenodes_matplotlib/', "*.py"))
+    modules = glob.glob(join(dirname(__file__), '../src/ln_matplotlib/', "*.py"))
     names = [basename(f)[:-3] for f in modules if isfile(f)]
     return [f for f in names if not f in exclude]
 
@@ -25,7 +25,7 @@ class TestProcessing:
 
     def test_loads_class(self):
         draw_lines = [x.load() for x in entry_points(group='livenodes.nodes') if x.name == 'draw_lines'][0]
-        from livenodes_matplotlib.draw_lines import Draw_lines
+        from ln_matplotlib.draw_lines import Draw_lines
         assert Draw_lines == draw_lines
 
     def test_all_loadable(self):

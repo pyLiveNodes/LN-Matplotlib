@@ -1,6 +1,6 @@
 from livenodes.viewer import View_MPL
 from livenodes import Ports_collection
-from livenodes_common_ports import Ports_empty, Port_List_Str
+from ln_ports import Ports_empty, Port_List_Str
 
 class Ports_in(Ports_collection):
     text: Port_List_Str = Port_List_Str("Text")

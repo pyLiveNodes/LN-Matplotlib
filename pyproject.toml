@@ -10,7 +10,7 @@ authors = [
 # pip install -e . --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple
 dependencies = [
     "livenodes>=0.12.1b1",
-    "ln-ports>=0.12.1b5",
+    "ln-ports>=0.12.1b8",
     "numpy>=1.22.1",
     "seaborn>=0.11.2",
     "matplotlib>=3.5.1",
@@ -19,14 +19,14 @@ dependencies = [
 ]
 
 [project.entry-points."livenodes.nodes"]
-draw_broken_bars = "livenodes_matplotlib.draw_broken_bars:Draw_broken_bars"
-draw_stacked_bars = "livenodes_matplotlib.draw_stacked_bars:Draw_stacked_bars"
-draw_gmm = "livenodes_matplotlib.draw_gmm:Draw_gmm"
-draw_heatmap = "livenodes_matplotlib.draw_heatmap:Draw_heatmap"
-draw_hbars = "livenodes_matplotlib.draw_hbars:Draw_hbars"
-draw_lines = "livenodes_matplotlib.draw_lines:Draw_lines"
-draw_scatter = "livenodes_matplotlib.draw_scatter:Draw_scatter"
-draw_text_display = "livenodes_matplotlib.draw_text_display:Draw_text_display"
+draw_broken_bars = "ln_matplotlib.draw_broken_bars:Draw_broken_bars"
+draw_stacked_bars = "ln_matplotlib.draw_stacked_bars:Draw_stacked_bars"
+draw_gmm = "ln_matplotlib.draw_gmm:Draw_gmm"
+draw_heatmap = "ln_matplotlib.draw_heatmap:Draw_heatmap"
+draw_hbars = "ln_matplotlib.draw_hbars:Draw_hbars"
+draw_lines = "ln_matplotlib.draw_lines:Draw_lines"
+draw_scatter = "ln_matplotlib.draw_scatter:Draw_scatter"
+draw_text_display = "ln_matplotlib.draw_text_display:Draw_text_display"
 
 
 [project.optional-dependencies]

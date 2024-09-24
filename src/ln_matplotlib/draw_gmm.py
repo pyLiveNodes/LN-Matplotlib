@@ -5,7 +5,7 @@ import matplotlib as mpl
 from .draw_scatter import Draw_scatter
 
 from livenodes import Ports_collection
-from livenodes_common_ports import Port_Dict, Ports_empty, Port_BTS_Number, Port_List_Str
+from ln_ports import Port_Dict, Ports_empty, Port_BTS_Number, Port_List_Str
 
 class Ports_in(Ports_collection):
     data: Port_BTS_Number = Port_BTS_Number("Data")

@@ -1,7 +1,7 @@
 import numpy as np
 
 from livenodes.viewer import View_MPL
-from livenodes_common_ports import Ports_ts_channels, Ports_empty
+from ln_ports import Ports_ts_channels, Ports_empty
 
 
 class Draw_scatter(View_MPL):

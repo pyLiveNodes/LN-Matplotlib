@@ -1,5 +1,5 @@
 from livenodes.viewer import View_MPL
-from livenodes_common_ports import Port_Matrix_Number, Ports_empty
+from ln_ports import Port_Matrix_Number, Ports_empty
 from livenodes import Ports_collection
 
 class Ports_in(Ports_collection):

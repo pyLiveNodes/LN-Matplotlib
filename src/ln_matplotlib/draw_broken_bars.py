@@ -1,7 +1,7 @@
 from itertools import groupby
 from livenodes.viewer import View_MPL
 from livenodes import Ports_collection
-from livenodes_common_ports import Port_Matrix_Any, Ports_empty, Port_List_Str
+from ln_ports import Port_Matrix_Any, Ports_empty, Port_List_Str
 
 class Ports_in(Ports_collection):
     classes: Port_Matrix_Any = Port_Matrix_Any("classes")
