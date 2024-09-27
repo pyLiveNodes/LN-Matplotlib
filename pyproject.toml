@@ -13,9 +13,7 @@ dependencies = [
     "ln-ports>=0.12.1b8",
     "numpy>=1.22.1",
     "seaborn>=0.11.2",
-    "matplotlib>=3.5.1",
-
-    "setuptools>=60.0.0"
+    "matplotlib>=3.5.1"
 ]
 
 [project.entry-points."livenodes.nodes"]
@@ -48,6 +46,6 @@ build-backend = 'setuptools.build_meta'
 enabled = true
 
 [tool.black]
-line-length = 140
-target-version = ['py38']
+line-length = 180
+target-version = ['py311']
 skip-string-normalization = true
