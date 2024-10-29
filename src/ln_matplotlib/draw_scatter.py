@@ -1,7 +1,7 @@
 import numpy as np
 
 from livenodes.viewer import View_MPL
-from livenodes_core_nodes.ports import Ports_data_channels, Ports_empty
+from ln_ports import Ports_ts_channels, Ports_empty
 
 
 class Draw_scatter(View_MPL):
@@ -13,7 +13,7 @@ class Draw_scatter(View_MPL):
     Draws on a matplotlib canvas.
     """
 
-    ports_in = Ports_data_channels()
+    ports_in = Ports_ts_channels()
     ports_out = Ports_empty()
 
     category = "Draw"
@@ -83,19 +83,19 @@ class Draw_scatter(View_MPL):
 
         return update
 
-    def _should_process(self, data=None, channels=None):
-        return (data is not None) and \
+    def _should_process(self, ts=None, channels=None):
+        return (ts is not None) and \
             (self.channels is not None or channels is not None)
 
     # data should follow the (batch/file, time, channel) format
-    def process(self, data, channels=None, **kwargs):
+    def process(self, ts, channels=None, **kwargs):
         if channels is not None:
             self.channels = channels
 
-        # data format is (batch/file, time, channel)
+        # ts format is (batch/file, time, channel)
         # first subselect the channels we want to use
         # then concatenate batches
-        d = np.vstack(np.array(data)[:, :, :2])
+        d = np.vstack(np.array(ts)[:, :, :2])
 
         self.data = np.roll(self.data, -d.shape[0], axis=0)
         self.data[-d.shape[0]:] = d
