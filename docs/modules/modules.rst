@@ -1,7 +1,7 @@
-livenodes_matplotlib
+ln_matplotlib
 ====================
 
 .. toctree::
    :maxdepth: 4
 
-   livenodes_matplotlib
+   ln_matplotlib

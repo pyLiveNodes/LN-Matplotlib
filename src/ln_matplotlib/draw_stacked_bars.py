@@ -1,14 +1,14 @@
 import numpy as np
 
 from livenodes.viewer import View_MPL
-from livenodes_core_nodes.ports import Ports_data, Ports_empty
+from ln_ports import Ports_ts, Ports_empty
 
 
 class Draw_stacked_bars(View_MPL):
     """
     """
 
-    ports_in = Ports_data()
+    ports_in = Ports_ts()
     ports_out = Ports_empty()
 
     category = "Draw"
@@ -70,5 +70,5 @@ class Draw_stacked_bars(View_MPL):
         return update
 
     # data should follow the (batch/file, time, channel) format
-    def process(self, data,  **kwargs):       
-        self._emit_draw(data=data)
+    def process(self, ts,  **kwargs):       
+        self._emit_draw(data=ts)

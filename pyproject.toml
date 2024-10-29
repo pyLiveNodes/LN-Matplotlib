@@ -1,5 +1,5 @@
 [project]
-name = "Livenodes-Matplotlib"
+name = "LN-Matplotlib"
 dynamic = ['version']
 description = "LiveNodes: node based live streaming sensor/data and visualization suite."
 authors = [
@@ -9,27 +9,22 @@ authors = [
 # pip install . --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple
 # pip install -e . --extra-index-url https://package_puller:8qYs4hBAsmAHJ5AdS_y9@gitlab.csl.uni-bremen.de/api/v4/groups/368/-/packages/pypi/simple
 dependencies = [
-    "livenodes>=0.9.1",
-    "livenodes-core-nodes>=0.9.1",
+    "livenodes>=0.12.1b1",
+    "ln-ports>=0.12.1b8",
     "numpy>=1.22.1",
-    "seaborn~=0.11.2",
-    "matplotlib~=3.5.1",
-
-    "setuptools>=60.0.0, <67"
+    "seaborn>=0.11.2",
+    "matplotlib>=3.5.1"
 ]
-# setuptools version is specified due to a problem in livenodes (presumably phx-class-registry), which causes an deprectation error
-# Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
-# FIX upstream and remove here
 
 [project.entry-points."livenodes.nodes"]
-draw_broken_bars = "livenodes_matplotlib.draw_broken_bars:Draw_broken_bars"
-draw_stacked_bars = "livenodes_matplotlib.draw_stacked_bars:Draw_stacked_bars"
-draw_gmm = "livenodes_matplotlib.draw_gmm:Draw_gmm"
-draw_heatmap = "livenodes_matplotlib.draw_heatmap:Draw_heatmap"
-draw_hbars = "livenodes_matplotlib.draw_hbars:Draw_hbars"
-draw_lines = "livenodes_matplotlib.draw_lines:Draw_lines"
-draw_scatter = "livenodes_matplotlib.draw_scatter:Draw_scatter"
-draw_text_display = "livenodes_matplotlib.draw_text_display:Draw_text_display"
+draw_broken_bars = "ln_matplotlib.draw_broken_bars:Draw_broken_bars"
+draw_stacked_bars = "ln_matplotlib.draw_stacked_bars:Draw_stacked_bars"
+draw_gmm = "ln_matplotlib.draw_gmm:Draw_gmm"
+draw_heatmap = "ln_matplotlib.draw_heatmap:Draw_heatmap"
+draw_hbars = "ln_matplotlib.draw_hbars:Draw_hbars"
+draw_lines = "ln_matplotlib.draw_lines:Draw_lines"
+draw_scatter = "ln_matplotlib.draw_scatter:Draw_scatter"
+draw_text_display = "ln_matplotlib.draw_text_display:Draw_text_display"
 
 
 [project.optional-dependencies]
@@ -42,7 +37,7 @@ dev = [
 requires = [
     "setuptools>=60",
     "wheel",
-    "setuptools_scm >= 2.0.0, <3",
+    "setuptools_scm >= 3.0.0",
     "setuptools-git-versioning"
 ]
 build-backend = 'setuptools.build_meta'
@@ -51,6 +46,6 @@ build-backend = 'setuptools.build_meta'
 enabled = true
 
 [tool.black]
-line-length = 140
-target-version = ['py36']
+line-length = 180
+target-version = ['py311']
 skip-string-normalization = true
