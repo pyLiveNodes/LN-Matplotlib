@@ -7,7 +7,7 @@ Submodules
 livenodes\_matplotlib.draw\_broken\_bars module
 -----------------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_broken_bars
+.. automodule:: ln_matplotlib.draw_broken_bars
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ livenodes\_matplotlib.draw\_broken\_bars module
 livenodes\_matplotlib.draw\_gmm module
 --------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_gmm
+.. automodule:: ln_matplotlib.draw_gmm
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ livenodes\_matplotlib.draw\_gmm module
 livenodes\_matplotlib.draw\_hbars module
 ----------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_hbars
+.. automodule:: ln_matplotlib.draw_hbars
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ livenodes\_matplotlib.draw\_hbars module
 livenodes\_matplotlib.draw\_heatmap module
 ------------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_heatmap
+.. automodule:: ln_matplotlib.draw_heatmap
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ livenodes\_matplotlib.draw\_heatmap module
 livenodes\_matplotlib.draw\_lines module
 ----------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_lines
+.. automodule:: ln_matplotlib.draw_lines
    :members:
    :undoc-members:
    :show-inheritance:
@@ -47,7 +47,7 @@ livenodes\_matplotlib.draw\_lines module
 livenodes\_matplotlib.draw\_scatter module
 ------------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_scatter
+.. automodule:: ln_matplotlib.draw_scatter
    :members:
    :undoc-members:
    :show-inheritance:
@@ -55,7 +55,7 @@ livenodes\_matplotlib.draw\_scatter module
 livenodes\_matplotlib.draw\_stacked\_bars module
 ------------------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_stacked_bars
+.. automodule:: ln_matplotlib.draw_stacked_bars
    :members:
    :undoc-members:
    :show-inheritance:
@@ -63,7 +63,7 @@ livenodes\_matplotlib.draw\_stacked\_bars module
 livenodes\_matplotlib.draw\_text\_display module
 ------------------------------------------------
 
-.. automodule:: livenodes_matplotlib.draw_text_display
+.. automodule:: ln_matplotlib.draw_text_display
    :members:
    :undoc-members:
    :show-inheritance:
@@ -71,7 +71,7 @@ livenodes\_matplotlib.draw\_text\_display module
 Module contents
 ---------------
 
-.. automodule:: livenodes_matplotlib
+.. automodule:: ln_matplotlib
    :members:
    :undoc-members:
    :show-inheritance:
