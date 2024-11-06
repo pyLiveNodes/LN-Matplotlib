@@ -1,3 +1,6 @@
+[![Format and Test](https://github.com/pyLiveNodes/LN-Matplotlib/actions/workflows/format_test.yml/badge.svg)](https://github.com/pyLiveNodes/LN-Matplotlib/actions/workflows/format_test.yml)
+[![Publish](https://github.com/pyLiveNodes/LN-Matplotlib/actions/workflows/publish.yml/badge.svg)](https://github.com/pyLiveNodes/LN-Matplotlib/actions/workflows/publish.yml)
+
 # LN Matplotlib
 
 The Livenodes Matplotlib package provides several plotting nodes (lines, heatmaps, bars, broken bars, etc).
